@@ -7,11 +7,13 @@
     <style>
         @media print {
             .no-print { display: none; }
+            body { background: white; }
             .page { 
                 page-break-after: always; 
                 margin: 0 !important; 
                 border: none !important;
                 box-shadow: none !important;
+                height: 100vh;
             }
         }
         body { 
@@ -25,46 +27,45 @@
         .page {
             background: white;
             width: 210mm;
-            min-height: 290mm;
-            margin: 20px auto;
+            min-height: 296mm;
+            margin: 30px auto;
             padding: 40px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
             position: relative;
         }
         .header-name {
-            text-align: left; font-size: 12px; color: #999;
-            font-family: sans-serif; margin-bottom: 10px;
+            text-align: left; font-size: 13px; color: #999;
+            font-family: sans-serif; margin-bottom: 15px;
         }
         .main-letter {
-            font-size: 160px; color: #d32f2f; margin: 0; line-height: 1.1;
+            font-size: 170px; color: #d32f2f; margin: 0; line-height: 1.1;
         }
         .trace-section {
             border: 2px dashed #eee; background: #fafafa;
             padding: 20px; border-radius: 15px; margin: 15px 0;
         }
-        .dotted { font-size: 80px; color: #e0e0e0; letter-spacing: 25px; }
+        .dotted { font-size: 85px; color: #e0e0e0; letter-spacing: 30px; }
         .grid {
             display: grid; grid-template-columns: 1fr 1fr;
             gap: 20px; margin-top: 10px; flex-grow: 1;
         }
         .card {
-            border: 1px solid #f0f0f0; border-radius: 12px;
+            border: 1px solid #f0f0f0; border-radius: 15px;
             padding: 15px; background: #fff;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
         .label { 
-            font-size: 45px; color: #1e88e5; background: #e3f2fd; 
-            width: 100%; border-radius: 8px; margin-bottom: 10px;
+            font-size: 50px; color: #1e88e5; background: #e3f2fd; 
+            width: 100%; border-radius: 10px; margin-bottom: 10px;
         }
-        .emoji { font-size: 50px; }
-        .word { font-size: 32px; font-weight: bold; }
-        .lines { margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; }
-        .line { height: 45px; border-bottom: 2px solid #333; margin: 10px 0; }
+        .emoji { font-size: 55px; }
+        .word { font-size: 35px; font-weight: bold; }
+        .lines { margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; }
+        .line { height: 45px; border-bottom: 2px solid #333; margin: 12px 0; }
         
-        /* ലാസ്റ്റ് പേജ് ടേബിൾ സ്റ്റൈൽ */
         .summary-table {
             width: 100%; border-collapse: collapse; margin-top: 20px;
             direction: ltr; font-family: sans-serif;
@@ -73,12 +74,12 @@
             border: 1px solid #ddd; padding: 12px; text-align: center;
         }
         .summary-table th { background: #f8f9fa; }
-        .summary-ar { font-family: 'Amiri'; font-size: 30px; }
+        .summary-ar { font-family: 'Amiri'; font-size: 32px; font-weight: bold; }
 
         .btn { 
             position: fixed; top: 15px; left: 15px; z-index: 1000;
             background: #27ae60; color: white; border: none; padding: 12px 24px; 
-            border-radius: 5px; cursor: pointer; font-weight: bold;
+            border-radius: 5px; cursor: pointer; font-weight: bold; font-family: sans-serif;
         }
     </style>
 </head>
@@ -100,28 +101,27 @@
             { c: 'ذ', m: 'ദാൽ', ex: [{h:'ذَ', w:'ذَهَبٌ', e:'💰'}, {h:'ذِ', w:'ذِئْبٌ', e:'🐺'}, {h:'ذُ', w:'ذُرَةٌ', e:'🌽'}, {h:'ذْ', w:'جِذْعٌ', e:'🪵'}] },
             { c: 'ر', m: 'റാഅ്', ex: [{h:'رَ', w:'رَجُلٌ', e:'👨'}, {h:'رِ', w:'رِجْلٌ', e:'🦵'}, {h:'رُ', w:'رُمَّانٌ', e:'🍎'}, {h:'رْ', w:'بَرْدٌ', e:'❄️'}] },
             { c: 'ز', m: 'സാഅ്', ex: [{h:'زَ', w:'زَرَافَةٌ', e:'🦒'}, {h:'زِ', w:'زِيارَةٌ', e:'🤝'}, {h:'زُ', w:'زُهُورٌ', e:'💐'}, {h:'زْ', w:'مَزْرَعَةٌ', e:'🚜'}] },
-            { c: 'س', m: 'സീൻ', ex: [{h:'سَ', w:'سَمَكَةٌ', e:'🐟'}, {h:'سِ', w:'سِكِّينٌ', e:'🔪'}, {h:'سُ', w:'سُلَحْفَاةٌ', e:'🐢'}, {h:'سْ', w:'مَسْجِدٌ', e:'🕌'}] },
-            { c: 'ش', m: 'ഷീൻ', ex: [{h:'شَ', w:'شَمْسٌ', e:'☀️'}, {h:'شِ', w:'شِتَاءٌ', e:'🌧️'}, {h:'شُ', w:'شُرْطِيٌّ', e:'👮'}, {h:'شْ', w:'مَشْمِشٌ', e:'🍑'}] },
-            { c: 'ص', m: 'സ്വാദ്', ex: [{h:'صَ', w:'صَقْرٌ', e:'🦅'}, {h:'صِ', w:'صِفْرٌ', e:'0️⃣'}, {h:'صُ', w:'صُنْدُوقٌ', e:'📦'}, {h:'صْ', w:'قَصْرٌ', e:'🏰'}] },
-            { c: 'ض', m: 'ളാദ്', ex: [{h:'ضَ', w:'ضَوْءٌ', e:'💡'}, {h:'ضِ', w:'ضِرْسٌ', e:'🦷'}, {h:'ضُ', w:'ضُفْدَعٌ', e:'🐸'}, {h:'ضْ', w:'مِضْرَبٌ', e:'🎾'}] },
-            { c: 'ط', m: 'ത്വാഅ്', ex: [{h:'طَ', w:'طَبﻴﺐٌ', e:'👨‍⚕️'}, {h:'طِ', w:'طِفْلٌ', e:'👶'}, {h:'طُ', w:'طُيُورٌ', e:'🐦'}, {h:'طْ', w:'مَطْبَخٌ', e:'🍳'}] },
-            { c: 'ظ', m: 'ളാഅ്', ex: [{h:'ظَ', w:'ظَرْفٌ', e:'✉️'}, {h:'ظِ', w:'ظِلٌّ', e:'👤'}, {h:'ظُ', w:'ظُفُرٌ', e:'💅'}, {h:'ظْ', w:'مَظْلُومٌ', e:'⚖️'}] },
-            { c: 'ع', m: 'ഐൻ', ex: [{h:'عَ', w:'عَيْنٌ', e:'👁️'}, {h:'عِ', w:'عِنَبٌ', e:'🍇'}, {h:'عُ', w:'عُصْفُورٌ', e:'🐦'}, {h:'عْ', w:'مَلْعَبٌ', e:'🏟️'}] },
-            { c: 'غ', m: 'ഗൈൻ', ex: [{h:'غَ', w:'غَزَالٌ', e:'🦒'}, {h:'غِ', w:'غِطاءٌ', e:'🛏️'}, {h:'غُ', w:'غُرَابٌ', e:'🐦'}, {h:'غْ', w:'مَغْرِبٌ', e:'🌇'}] },
-            { c: 'ف', m: 'ഫാഅ്', ex: [{h:'فَ', w:'فَرَاشَةٌ', e:'🦋'}, {h:'فِ', w:'فِيلٌ', e:'🐘'}, {h:'فُ', w:'فُرْشَاةٌ', e:'🪥'}, {h:'فْ', w:'ضِفْدَعٌ', e:'🐸'}] },
-            { c: 'ق', m: 'ഖാഫ്', ex: [{h:'قَ', w:'قَمَرٌ', e:'🌙'}, {h:'قِ', w:'قِطٌّ', e:'🐈'}, {h:'قُ', w:'قُبَّعَةٌ', e:'👒'}, {h:'قْ', w:'صَقْرٌ', e:'🦅'}] },
-            { c: 'ك', m: 'കാഫ്', ex: [{h:'كَ', w:'كَلْبٌ', e:'🐕'}, {h:'كِ', w:'كِتَابٌ', e:'📚'}, {h:'كُ', w:'كُرَةٌ', e:'⚽'}, {h:'كْ', w:'مَكْتَبٌ', e:'📝'}] },
-            { c: 'ل', m: 'ലാം', ex: [{h:'لَ', w:'لَيْمُونٌ', e:'🍋'}, {h:'لِ', w:'لِسَانٌ', e:'👅'}, {h:'لُ', w:'لُعْبَةٌ', e:'🧸'}, {h:'لْ', w:'مَلْعَبٌ', e:'🏟️'}] },
-            { c: 'م', m: 'മീം', ex: [{h:'مَ', w:'مَوْزٌ', e:'🍌'}, {h:'مِ', w:'مِقَصٌّ', e:'✂️'}, {h:'مُ', w:'مُعَلِّمٌ', e:'👨‍🏫'}, {h:'مْ', w:'تَمْرٌ', e:'🌴'}] },
-            { c: 'ن', m: 'നൂൻ', ex: [{h:'نَ', w:'نَحْلَةٌ', e:'🐝'}, {h:'نِ', w:'نِسْرٌ', e:'🦅'}, {h:'نُ', w:'نُجُومٌ', e:'⭐'}, {h:'نْ', w:'بِنْتٌ', e:'👧'}] },
-            { c: 'ه', m: 'ഹാഅ്', ex: [{h:'هَ', w:'هَدِيَّةٌ', e:'🎁'}, {h:'هِ', w:'هِلالٌ', e:'🌙'}, {h:'هُ', w:'هُدْهُدٌ', e:'🐦'}, {h:'هْ', w:'فَهْدٌ', e:'🐆'}] },
-            { c: 'و', m: 'വാവ്', ex: [{h:'وَ', w:'وَرْدَةٌ', e:'🌹'}, {h:'وِ', w:'وِسامٌ', e:'🏅'}, {h:'وُ', w:'وُضُوءٌ', e:'💧'}, {h:'وْ', w:'لَوْنٌ', e:'🎨'}] },
-            { c: 'ي', m: 'യാഅ്', ex: [{h:'يَ', w:'يَدٌ', e:'✋'}, {h:'يِ', w:'يَصِيحُ', e:'📢'}, {h:'يُ', w:'يُصَلِّي', e:'🕌'}, {h:'يْ', w:'بَيْتٌ', e:'🏠'}] }
+            { c: 'س', m: 'സീൻ', ex: [{h:'سَ', w:'سَمَകَةٌ', e:'🐟'}, {h:'سِ', w:'സിക്കീൻ', e:'🔪'}, {h:'സُ', w:'സുലഹ്ഫാത്ത്', e:'🐢'}, {h:'സْ', w:'മസ്‍ജിദ്', e:'🕌'}] },
+            { c: 'ش', m: 'ഷീൻ', ex: [{h:'شَ', w:'ഷംസ്', e:'☀️'}, {h:'ഷِ', w:'ഷിതാഅ്', e:'🌧️'}, {h:'ഷُ', w:'ഷുർത്വിയ്യ്', e:'👮'}, {h:'ഷْ', w:'മഷ്‍മിഷ്', e:'🍑'}] },
+            { c: 'ص', m: 'സ്വാദ്', ex: [{h:'صَ', w:'സ്വഖ്ർ', e:'🦅'}, {h:'صِ', w:'സ്വിഫ്ർ', e:'0️⃣'}, {h:'صُ', w:'സ്വുന്ദൂഖ്', e:'📦'}, {h:'صْ', w:'ഖസ്വർ', e:'🏰'}] },
+            { c: 'ض', m: 'ളാദ്', ex: [{h:'ضَ', w:'ളൗഅ്', e:'💡'}, {h:'ضِ', w:'ളർസ്', e:'🦷'}, {h:'ضُ', w:'ളഫ്ദഅ്', e:'🐸'}, {h:'ضْ', w:'മിള്‍റബ്', e:'🎾'}] },
+            { c: 'ط', m: 'ത്വാഅ്', ex: [{h:'طَ', w:'ത്വബീബ്', e:'👨‍⚕️'}, {h:'طِ', w:'ത്വിഫ്ൽ', e:'👶'}, {h:'طُ', w:'ത്വുയൂർ', e:'🐦'}, {h:'طْ', w:'മത്ബഖ്', e:'🍳'}] },
+            { c: 'ظ', m: 'ളാഅ്', ex: [{h:'ظَ', w:'ളർഫ്', e:'✉️'}, {h:'ظِ', w:'ളില്ല്', e:'👤'}, {h:'ظُ', w:'ളുഫുർ', e:'💅'}, {h:'ظْ', w:'മള്‍ലൂം', e:'⚖️'}] },
+            { c: 'ع', m: 'ഐൻ', ex: [{h:'عَ', w:'ഐൻ', e:'👁️'}, {h:'عِ', w:'ഇനബ്', e:'🍇'}, {h:'عُ', w:'ഉസ്ഫൂർ', e:'🐦'}, {h:'عْ', w:'മൽഅബ്', e:'🏟️'}] },
+            { c: 'غ', m: 'ഗൈൻ', ex: [{h:'غَ', w:'ഗസാൽ', e:'🦒'}, {h:'غِ', w:'ഗിതാഅ്', e:'🛏️'}, {h:'غُ', w:'ഗുറാബ്', e:'🐦'}, {h:'غْ', w:'മഗ്‌രിബ്', e:'🌇'}] },
+            { c: 'ف', m: 'ഫാഅ്', ex: [{h:'فَ', w:'ഫറാശത്ത്', e:'🦋'}, {h:'فِ', w:'ഫീൽ', e:'🐘'}, {h:'فُ', w:'ഫുർഷാത്ത്', e:'🪥'}, {h:'فْ', w:'ളഫ്ദഅ്', e:'🐸'}] },
+            { c: 'ق', m: 'ഖാഫ്', ex: [{h:'قَ', w:'ഖമർ', e:'🌙'}, {h:'قِ', w:'ഖിത്ത്വ്', e:'🐈'}, {h:'قُ', w:'ഖുബ്ബഅത്ത്', e:'👒'}, {h:'قْ', w:'സ്വഖ്ർ', e:'🦅'}] },
+            { c: 'ك', m: 'കാഫ്', ex: [{h:'كَ', w:'കൽബ്', e:'🐕'}, {h:'كِ', w:'കിതാബ്', e:'📚'}, {h:'كُ', w:'കുറത്ത്', e:'⚽'}, {h:'كْ', w:'മക്തബ്', e:'📝'}] },
+            { c: 'ل', m: 'ലാം', ex: [{h:'لَ', w:'ലയ്മൂൻ', e:'🍋'}, {h:'لِ', w:'ലിസാൻ', e:'👅'}, {h:'لُ', w:'ലുവ്ബത്ത്', e:'🧸'}, {h:'لْ', w:'മൽഅബ്', e:'🏟️'}] },
+            { c: 'م', m: 'മീം', ex: [{h:'مَ', w:'മൗസ്', e:'🍌'}, {h:'مِ', w:'മിഖസ്സ്', e:'✂️'}, {h:'مُ', w:'മുഅല്ലിം', e:'👨‍🏫'}, {h:'مْ', w:'തമ്ർ', e:'🌴'}] },
+            { c: 'ن', m: 'നൂൻ', ex: [{h:'نَ', w:'നഹ്‌ലത്ത്', e:'🐝'}, {h:'نِ', w:'നിസ്ർ', e:'🦅'}, {h:'نُ', w:'നുജൂം', e:'⭐'}, {h:'نْ', w:'ബിന്ത്', e:'👧'}] },
+            { c: 'ه', m: 'ഹാഅ്', ex: [{h:'هَ', w:'ഹദിയ്യത്ത്', e:'🎁'}, {h:'هِ', w:'ഹിലാൽ', e:'🌙'}, {h:'هُ', w:'ഹുദ്ഹുദ്', e:'🐦'}, {h:'هْ', w:'ഫഹദ്', e:'🐆'}] },
+            { c: 'و', m: 'വാവ്', ex: [{h:'وَ', w:'വർദത്ത്', e:'🌹'}, {h:'وِ', w:'വിസാം', e:'🏅'}, {h:'وُ', w:'വുളൂഅ്', e:'💧'}, {h:'وْ', w:'ലൗൻ', e:'🎨'}] },
+            { c: 'ي', m: 'യാഅ്', ex: [{h:'يَ', w:'യദ്', e:'✋'}, {h:'يِ', w:'യസ്വീഹു', e:'📢'}, {h:'يُ', w:'യുസ്വല്ലി', e:'🕌'}, {h:'يْ', w:'ബൈത്ത്', e:'🏠'}] }
         ];
 
         const container = document.getElementById('container');
 
-        // അക്ഷരങ്ങളുടെ പേജുകൾ നിർമ്മിക്കുന്നു
         alphabet.forEach(item => {
             const page = document.createElement('div');
             page.className = 'page';
@@ -145,7 +145,6 @@
             container.appendChild(page);
         });
 
-        // അവസാനത്തെ സമ്മറി പേജ്
         const summaryPage = document.createElement('div');
         summaryPage.className = 'page';
         let rows = '';
@@ -161,7 +160,7 @@
         }
         summaryPage.innerHTML = `
             <div class="header-name">Ameen Azhari | Madrasa Hub</div>
-            <h2 style="font-family:sans-serif;">അറബിക് അക്ഷരമാല - മലയാളം ഉച്ചാരണം</h2>
+            <h2 style="font-family:sans-serif; margin-bottom:30px;">അറബിക് അക്ഷരമാല - മലയാളം ഉച്ചാരണം</h2>
             <table class="summary-table">
                 <thead><tr><th>അക്ഷരം</th><th>മലയാളം</th><th>അക്ഷരം</th><th>മലയാളം</th></tr></thead>
                 <tbody>${rows}</tbody>
