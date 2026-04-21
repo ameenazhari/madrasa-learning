@@ -2,30 +2,46 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>Arabic Workbook - Final with Dictionary</title>
+    <title>Arabic Workbook Final - Ameen Azhari</title>
     <style>
         @media print {
             .no-print { display: none; }
             .page { page-break-after: always; height: 296mm; margin: 0 !important; padding: 20px !important; border: none !important; }
             body { -webkit-print-color-adjust: exact; }
         }
-        body { font-family: "Sakkal Majalla", "Simplified Arabic", Arial, sans-serif; direction: rtl; text-align: center; margin: 0; background: #f4f7f6; }
-        .page { background: white; width: 210mm; min-height: 296mm; margin: 10px auto; padding: 35px; box-sizing: border-box; display: flex; flex-direction: column; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        body { 
+            font-family: "Sakkal Majalla", "Simplified Arabic", "Segoe UI", Arial, sans-serif; 
+            direction: rtl; 
+            text-align: center; 
+            margin: 0; 
+            background: #f4f7f6; 
+        }
+        .page { 
+            background: white; 
+            width: 210mm; 
+            min-height: 296mm; 
+            margin: 10px auto; 
+            padding: 35px; 
+            box-sizing: border-box; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+        }
         .header-name { text-align: left; font-size: 13px; color: #999; border-bottom: 1px solid #eee; margin-bottom: 10px; font-family: sans-serif; }
         
-        /* Table Styles */
         .dict-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .dict-table th, .dict-table td { border: 1px solid #ddd; padding: 8px; text-align: center; vertical-align: middle; }
         .dict-table th { background: #2c3e50; color: white; font-size: 16px; }
-        .emoji-size { font-size: 35px; }
-        .ar-word { font-size: 24px; font-weight: bold; color: #d32f2f; }
-        .ml-meaning { font-size: 16px; color: #27ae60; font-family: 'Meera', sans-serif; }
-
-        /* General Styles from previous versions */
-        .main-letter { font-size: 160px; color: #d32f2f; }
+        
+        .main-letter { font-size: 160px; color: #d32f2f; line-height: 1; }
+        .trace-box { font-size: 60px; color: #ccc; letter-spacing: 20px; border: 1px dashed #eee; padding: 10px; margin: 10px 0; }
+        
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1; }
         .card { border: 1px solid #f0f0f0; border-radius: 10px; padding: 10px; display: flex; flex-direction: column; align-items: center; }
         .label { font-size: 50px; color: #1e88e5; background: #e3f2fd; width: 100%; border-radius: 5px; }
+        .ar-word { font-size: 30px; font-weight: bold; color: #333; }
+        .ml-meaning { font-size: 16px; color: #27ae60; }
+
         .btn { position: fixed; top: 15px; left: 15px; z-index: 1000; background: #27ae60; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
@@ -35,9 +51,9 @@
 
     <script>
         const alphabet = [
-            { c: 'أ', ml: 'അലിഫ്', f:'അ', k:'ഇ', l:'ഉ', ex: [{h:'أَ', w:'أَرْنَبٌ', e:'🐇', m:'മുയൽ'}, {h:'إِ', w:'إِبْرِيقٌ', e:'🍶', m:'ഭരണി/ജഗ്ഗ്'}, {h:'أُ', w:'أُذُنٌ', e:'👂', m:'ചെവി'}, {h:'أْ', w:'رَأْسٌ', e:'👤', m:'തല'}] },
+            { c: 'أ', ml: 'അലിഫ്', f:'അ', k:'ഇ', l:'ഉ', ex: [{h:'أَ', w:'أَرْنَبٌ', e:'🐇', m:'മുയൽ'}, {h:'إِ', w:'إِبْرِيقٌ', e:'🍶', m:'ജഗ്ഗ്'}, {h:'أُ', w:'أُذُنٌ', e:'👂', m:'ചെവി'}, {h:'أْ', w:'رَأْسٌ', e:'👤', m:'തല'}] },
             { c: 'ب', ml: 'ബാഅ്', f:'ബ', k:'ബി', l:'ബു', ex: [{h:'بَ', w:'بَيْتٌ', e:'🏠', m:'വീട്'}, {h:'بِ', w:'بِنْتٌ', e:'👧', m:'പെൺകുട്ടി'}, {h:'بُ', w:'بُرْتُقَالٌ', e:'🍊', m:'ഓറഞ്ച്'}, {h:'بْ', w:'خُبْزٌ', e:'🍞', m:'റൊട്ടി'}] },
-            { c: 'ت', ml: 'താഅ്', f:'ത', k:'തി', l:'തു', ex: [{h:'تَ', w:'تُفَّاحٌ', e:'🍎', m:'ആപ്പിൾ'}, {h:'تِ', w:'تِمْسَاحٌ', e:'🐊', m:'മുതല'}, {h:'تُ', w:'تُرْمُسٌ', e:'☕', m:'ചായ/കപ്പ്'}, {h:'تْ', w:'بِنْتٌ', e:'👧', m:'പെൺകുട്ടി'}] },
+            { c: 'ت', ml: 'താഅ്', f:'ത', k:'തി', l:'തു', ex: [{h:'تَ', w:'تُفَّاحٌ', e:'🍎', m:'ആപ്പിൾ'}, {h:'تِ', w:'تِمْسَاحٌ', e:'🐊', m:'മുതല'}, {h:'تُ', w:'تُرْمُسٌ', e:'☕', m:'കപ്പ്'}, {h:'تْ', w:'بِنْتٌ', e:'👧', m:'പെൺകുട്ടി'}] },
             { c: 'ث', ml: 'ഥാഅ്', f:'ഥ', k:'ഥി', l:'ഥു', ex: [{h:'ثَ', w:'ثَوْبٌ', e:'👕', m:'വസ്ത്രം'}, {h:'ثِ', w:'ثِيَابٌ', e:'👗', m:'ഉടുപ്പുകൾ'}, {h:'ثُ', w:'ثُعْبَانٌ', e:'🐍', m:'പാമ്പ്'}, {h:'ثْ', w:'إِثْنَانِ', e:'2️⃣', m:'രണ്ട്'}] },
             { c: 'ج', ml: 'ജീം', f:'ജ', k:'ജി', l:'ജു', ex: [{h:'جَ', w:'جَمَلٌ', e:'🐪', m:'ഒട്ടകം'}, {h:'جِ', w:'جِسْرٌ', e:'🌉', m:'പാലം'}, {h:'جُ', w:'جُبْنٌ', e:'🧀', m:'ചീസ്'}, {h:'جْ', w:'فَجْرٌ', e:'🌅', m:'പ്രഭാതം'}] },
             { c: 'ح', ml: 'ഹാഅ്', f:'ഹ', k:'ഹി', l:'ഹു', ex: [{h:'حَ', w:'حَمَامَةٌ', e:'🕊️', m:'പ്രാവ്'}, {h:'حِ', w:'حِصَانٌ', e:'🐎', m:'കുതിര'}, {h:'حُ', w:'حُوتٌ', e:'🐳', m:'തിമിംഗലം'}, {h:'حْ', w:'لَحْمٌ', e:'🥩', m:'ഇറച്ചി'}] },
@@ -47,16 +63,16 @@
             { c: 'ر', ml: 'റാഅ്', f:'റ', k:'റി', l:'റു', ex: [{h:'رَ', w:'رَجُلٌ', e:'👨', m:'പുരുഷൻ'}, {h:'رِ', w:'رِجْلٌ', e:'🦵', m:'കാൽ'}, {h:'رُ', w:'رُمَّانٌ', e:'🍎', m:'മാതളനാരങ്ങ'}, {h:'رْ', w:'بَرْدٌ', e:'❄️', m:'തണുപ്പ്'}] },
             { c: 'ز', ml: 'സാഅ്', f:'സ', k:'സി', l:'സു', ex: [{h:'زَ', w:'زَرَافَةٌ', e:'🦒', m:'ഒട്ടകപ്പക്ഷി'}, {h:'زِ', w:'زِيَارَةٌ', e:'🤝', m:'സന്ദർശനം'}, {h:'زُ', w:'زُهُورٌ', e:'💐', m:'പൂക്കൾ'}, {h:'زْ', w:'مَزْرَعَةٌ', e:'🚜', m:'കൃഷിഭൂമി'}] },
             { c: 'س', ml: 'സീൻ', f:'സ', k:'സി', l:'സു', ex: [{h:'سَ', w:'سَمَكٌ', e:'🐟', m:'മത്സ്യം'}, {h:'سِ', w:'سِكِّينٌ', e:'🔪', m:'കത്തി'}, {h:'سُ', w:'سُلَحْفَاةٌ', e:'🐢', m:'ആമ'}, {h:'سْ', w:'مَسْجِدٌ', e:'🕌', m:'പള്ളി'}] },
-            { c: 'ش', ml: 'ഷീൻ', f:'ഷ', k:'ഷി', l:'ഷു', ex: [{h:'شَ', w:'شَمْسٌ', e:'☀️', m:'സൂര്യൻ'}, {h:'شِ', w:'شِتَاءٌ', e:'🌧️', m:'മഴ/തണുപ്പ്'}, {h:'شُ', w:'شُرْطِيٌّ', e:'👮', m:'പോലീസ്'}, {h:'شْ', w:'مَشْمِشٌ', e:'🍑', m:'ഏപ്രിക്കോട്ട്'}] },
+            { c: 'ش', ml: 'ഷീൻ', f:'ഷ', k:'ഷി', l:'ഷു', ex: [{h:'شَ', w:'شَمْسٌ', e:'☀️', m:'സൂര്യൻ'}, {h:'شِ', w:'شِتَاءٌ', e:'🌧️', m:'തണുപ്പ്'}, {h:'شُ', w:'شُرْطِيٌّ', e:'👮', m:'പോലീസ്'}, {h:'شْ', w:'مَشْمِشٌ', e:'🍑', m:'ഏപ്രിക്കോട്ട്'}] },
             { c: 'ص', ml: 'സ്വാദ്', f:'സ്വ', k:'സ്വി', l:'സ്വുമു', ex: [{h:'صَ', w:'صَقْرٌ', e:'🦅', m:'പരുന്ത്'}, {h:'صِ', w:'صِفْرٌ', e:'0️⃣', m:'പൂജ്യം'}, {h:'صُ', w:'صُنْدُوقٌ', e:'📦', m:'പെട്ടി'}, {h:'صْ', w:'قَصْرٌ', e:'🏰', m:'കൊട്ടാരം'}] },
             { c: 'ض', ml: 'ള്വാദ്', f:'ള്വ', k:'ള്വി', l:'ള്വു', ex: [{h:'ضَ', w:'ضَوْءٌ', e:'💡', m:'വെളിച്ചം'}, {h:'ضِ', w:'ضِرْسٌ', e:'🦷', m:'പല്ല്'}, {h:'ضُ', w:'ضُفْدَعٌ', e:'🐸', m:'തവള'}, {h:'ضْ', w:'مِضْرَبٌ', e:'🎾', m:'ബാറ്റ്'}] },
             { c: 'ط', ml: 'ത്വാഅ്', f:'ത്വ', k:'ത്വി', l:'ത്വു', ex: [{h:'طَ', w:'طَبِيبٌ', e:'👨‍⚕️', m:'ഡോക്ടർ'}, {h:'طِ', w:'طِفْلٌ', e:'👶', m:'കുട്ടി'}, {h:'طُ', w:'طُيُورٌ', e:'🐦', m:'പക്ഷികൾ'}, {h:'طْ', w:'مَطْبَخٌ', e:'🍳', m:'അടുക്കള'}] },
             { c: 'ظ', ml: 'ള്വാഅ്', f:'ള്വ', k:'ള്വി', l:'ള്വു', ex: [{h:'ظَ', w:'ظَرْفٌ', e:'✉️', m:'കവർ'}, {h:'ظِ', w:'ظِلٌّ', e:'👤', m:'നിഴൽ'}, {h:'ظُ', w:'ظُفُرٌ', e:'💅', m:'നഖം'}, {h:'ظْ', w:'مَظْلُومٌ', e:'⚖️', m:'അനീതി'}] },
             { c: 'ع', ml: 'ഐൻ', f:'അ', k:'ഇ', l:'ഉ', ex: [{h:'عَ', w:'عَيْنٌ', e:'👁️', m:'കണ്ണ്'}, {h:'عِ', w:'عِنَبٌ', e:'🍇', m:'മുന്തിരി'}, {h:'عُ', w:'عُصْفُورٌ', e:'🐦', m:'പക്ഷി'}, {h:'عْ', w:'مَلْعَبٌ', e:'🏟️', m:'കളിക്കളം'}] },
             { c: 'غ', ml: 'ഗൈൻ', f:'ഗ', k:'ഗി', l:'ഗു', ex: [{h:'غَ', w:'غَزَالٌ', e:'🦒', m:'മാൻ'}, {h:'غِ', w:'غِطَاءٌ', e:'🛏️', m:'പുതപ്പ്'}, {h:'غُ', w:'غُرَابٌ', e:'🐦', m:'കാക്ക'}, {h:'غْ', w:'مَغْرِبٌ', e:'🌇', m:'സന്ധ്യ'}] },
-            { c: 'ف', ml: 'ഫാഅ്', f:'ഫ', k:'ഫി', l:'ഫു', ex: [{h:'فَ', w:'فَرَاشَةٌ', e:'🦋', m:'ചിത്രശലഭം'}, {h:'فِ', w:'فِيلٌ', e:'🐘', m:'ആന'}, {h:'فُ', w:'فُر്ഷാത്', e:'🪥', m:'ബ്രഷ്'}, {h:'فْ', w:'ضِفْدَعٌ', e:'🐸', m:'തവള'}] },
+            { c: 'ف', ml: 'ഫാഅ്', f:'ഫ', k:'ഫി', l:'ഫു', ex: [{h:'فَ', w:'فَرَاشَةٌ', e:'🦋', m:'ചിത്രശലഭം'}, {h:'فِ', w:'فِيلٌ', e:'🐘', m:'ആന'}, {h:'فُ', w:'فُرْشَاةٌ', e:'🪥', m:'ബ്രഷ്'}, {h:'فْ', w:'ضِفْدَعٌ', e:'🐸', m:'തവള'}] },
             { c: 'ق', ml: 'ഖാഫ്', f:'ഖ', k:'ഖി', l:'ഖു', ex: [{h:'قَ', w:'قَمَرٌ', e:'🌙', m:'ചന്ദ്രൻ'}, {h:'قِ', w:'قِطٌّ', e:'🐈', m:'പൂച്ച'}, {h:'قُ', w:'قُبَّعَةٌ', e:'👒', m:'തൊപ്പി'}, {h:'قْ', w:'صَقْرٌ', e:'🦅', m:'പരുന്ത്'}] },
-            { c: 'ك', ml: 'കാഫ്', f:'ക', k:'കി', l:'കു', ex: [{h:'كَ', w:'كَلْبٌ', e:'🐕', m:'നായ'}, {h:'كِ', w:'كِتَابٌ', e:'📚', m:'പുസ്തകം'}, {h:'كُ', w:'كُرَةٌ', e:'⚽', m:'പന്ത്'}, {h:'كْ', w:'مكْتَبٌ', e:'📝', m:'മേശ'}] },
+            { c: 'ك', ml: 'കാഫ്', f:'ക', k:'കി', l:'കു', ex: [{h:'كَ', w:'كَلْبٌ', e:'🐕', m:'നായ'}, {h:'كِ', w:'كِتَابٌ', e:'📚', m:'പുസ്തകം'}, {h:'كُ', w:'كُرَةٌ', e:'⚽', m:'പന്ത്'}, {h:'كْ', w:'مَكْتَبٌ', e:'📝', m:'മേശ'}] },
             { c: 'ل', ml: 'ലാം', f:'ല', k:'ലി', l:'ലു', ex: [{h:'لَ', w:'لَيْمُونٌ', e:'🍋', m:'നാരങ്ങ'}, {h:'لِ', w:'لِسَانٌ', e:'👅', m:'നാക്ക്'}, {h:'لُ', w:'لُعْبَةٌ', e:'🧸', m:'കളിപ്പാട്ടം'}, {h:'لْ', w:'مَلْعَبٌ', e:'🏟️', m:'കളിക്കളം'}] },
             { c: 'م', ml: 'മീം', f:'മ', k:'മി', l:'മു', ex: [{h:'مَ', w:'مَوْزٌ', e:'🍌', m:'പഴം'}, {h:'مِ', w:'مِقَصٌّ', e:'✂️', m:'കത്രിക'}, {h:'مُ', w:'مُعَلِّمٌ', e:'👨‍🏫', m:'അധ്യാപകൻ'}, {h:'مْ', w:'تَمْرٌ', e:'🌴', m:'ഈന്തപ്പഴം'}] },
             { c: 'ن', ml: 'നൂൻ', f:'ന', k:'നി', l:'നു', ex: [{h:'نَ', w:'نَحْلَةٌ', e:'🐝', m:'തേനീച്ച'}, {h:'نِ', w:'نِسْرٌ', e:'🦅', m:'കഴുകൻ'}, {h:'نُ', w:'نُجُومٌ', e:'⭐', m:'നക്ഷത്രങ്ങൾ'}, {h:'نْ', w:'بِنْتٌ', e:'👧', m:'പെൺകുട്ടി'}] },
@@ -67,19 +83,17 @@
 
         const container = document.getElementById('container');
 
-        // 1. Individual Pages
         alphabet.forEach(item => {
             const page = document.createElement('div');
             page.className = 'page';
             let gridHTML = '';
             item.ex.forEach(ex => {
-                gridHTML += `<div class="card"><div class="label">${ex.h}</div><div class="emoji-box" style="font-size:50px">${ex.e}</div><div class="word" style="font-size:30px">${ex.w}</div></div>`;
+                gridHTML += `<div class="card"><div class="label">${ex.h}</div><div style="font-size:50px">${ex.e}</div><div class="ar-word">${ex.w}</div></div>`;
             });
-            page.innerHTML = `<div class="header-name">Ameen Azhari | Madrasa Hub</div><div class="main-letter">${item.c}</div><div style="font-size:60px; color:#ccc; letter-spacing:20px; border:1px dashed #eee; padding:10px; margin:10px 0;">${item.c} ${item.c} ${item.c}</div><div class="grid">${gridHTML}</div><div style="height:40px; border-bottom:2px solid #555; margin-top:20px;"></div>`;
+            page.innerHTML = `<div class="header-name">Ameen Azhari | Madrasa Hub</div><div class="main-letter">${item.c}</div><div class="trace-box">${item.c} ${item.c} ${item.c}</div><div class="grid">${gridHTML}</div><div style="height:40px; border-bottom:2px solid #555; margin-top:20px;"></div>`;
             container.appendChild(page);
         });
 
-        // 2. Pronunciation Chart (Table)
         const tableChunks = [alphabet.slice(0, 14), alphabet.slice(14)];
         tableChunks.forEach((chunk, i) => {
             const chartPage = document.createElement('div');
@@ -92,17 +106,15 @@
             container.appendChild(chartPage);
         });
 
-        // 3. Picture Dictionary (Emoji + Arabic + Malayalam Meaning)
-        const allExamples = alphabet.flatMap(a => a.ex);
+        const allEx = alphabet.flatMap(a => a.ex);
         const dictChunks = [];
-        for (let i = 0; i < allExamples.length; i += 18) dictChunks.push(allExamples.slice(i, i + 18));
-
+        for (let i = 0; i < allEx.length; i += 18) dictChunks.push(allEx.slice(i, i + 18));
         dictChunks.forEach((chunk, idx) => {
             const dictPage = document.createElement('div');
             dictPage.className = 'page';
             let rows = '';
             chunk.forEach(ex => {
-                rows += `<tr><td class="emoji-size">${ex.e}</td><td class="ar-word">${ex.w}</td><td class="ml-meaning">${ex.m}</td></tr>`;
+                rows += `<tr><td style="font-size:35px">${ex.e}</td><td class="ar-word">${ex.w}</td><td class="ml-meaning">${ex.m}</td></tr>`;
             });
             dictPage.innerHTML = `<div class="header-name">Ameen Azhari | Picture Dictionary ${idx+1}</div><h2>ചിത്ര നിഘണ്ടു (Arabic - Malayalam)</h2><table class="dict-table"><thead><tr><th>ചിത്രം</th><th>അറബി വാക്ക്</th><th>മലയാളം അർത്ഥം</th></tr></thead><tbody>${rows}</tbody></table>`;
             container.appendChild(dictPage);
