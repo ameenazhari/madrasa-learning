@@ -3,100 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>അറബിക് പാഠപുസ്തകം - ഫുൾ കോഴ്സ്</title>
+    <title>അറബിക് ഹറകത്ത് പഠനം - അമീൻ അസ്ഹരി</title>
     <style>
         body { 
             text-align: center; 
-            background-color: #f4f7f6; 
+            background-color: #f0f4f8; 
             direction: rtl; 
             font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 10px;
+            margin: 0; padding: 10px;
         }
-        .header { 
-            background: #1e88e5; 
-            color: white; 
-            padding: 15px; 
-            border-radius: 0 0 20px 20px;
-            margin-bottom: 20px;
-            direction: ltr;
-        }
+        .header { background: #2c3e50; color: white; padding: 20px; border-radius: 0 0 20px 20px; }
         #start-btn {
-            background: #ff9800;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            border-radius: 50px;
-            cursor: pointer;
-            margin: 10px;
+            background: #27ae60; color: white; border: none; padding: 15px 40px;
+            font-size: 20px; border-radius: 50px; cursor: pointer; margin: 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
         .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-            max-width: 1000px;
-            margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px; max-width: 1200px; margin: 0 auto;
         }
         .card {
-            background: white;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: 0.3s;
-            border-bottom: 4px solid #ddd;
+            background: white; border-radius: 20px; padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); border: 1px solid #ddd;
         }
-        .card:active { transform: scale(0.95); background: #e3f2fd; }
-        .big-letter { font-size: 60px; color: #d32f2f; margin: 0; }
-        .emoji { font-size: 40px; margin: 5px 0; }
-        .word { font-size: 24px; font-weight: bold; color: #333; margin: 5px 0; }
-        .meaning { font-size: 14px; color: #777; direction: ltr; }
+        .main-info { margin-bottom: 15px; border-bottom: 2px dashed #eee; padding-bottom: 10px; }
+        .big-letter { font-size: 80px; color: #d32f2f; margin: 0; line-height: 1; }
+        .emoji { font-size: 40px; margin: 10px 0; }
+        .word { font-size: 30px; font-weight: bold; color: #333; }
+        
+        /* ഹറകത്ത് ബട്ടണുകൾ */
+        .harakat-box {
+            display: flex; justify-content: space-around; gap: 10px; margin-top: 15px;
+        }
+        .h-btn {
+            background: #f8f9fa; border: 2px solid #1e88e5; border-radius: 12px;
+            padding: 10px; flex: 1; cursor: pointer; transition: 0.2s;
+        }
+        .h-btn:active { background: #1e88e5; color: white; transform: scale(0.9); }
+        .h-text { font-size: 35px; font-weight: bold; display: block; }
+        .h-label { font-size: 12px; color: #666; display: block; margin-top: 5px; }
+
+        footer { margin-top: 50px; color: #888; padding-bottom: 30px; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>അറബിക് പാഠപുസ്തകം</h1>
-        <p>മുഴുവൻ അക്ഷരങ്ങളും ശബ്ദത്തോടൊപ്പം</p>
+        <h1>അറബിക് ഹറകത്ത് പഠനം</h1>
+        <p>അ/ഇ/ഉ/അ് ശബ്ദങ്ങൾ പഠിക്കാം</p>
     </div>
 
-    <button id="start-btn" onclick="initAudio()">പഠനം തുടങ്ങാം (Click to Start Audio)</button>
+    <button id="start-btn" onclick="initAudio()">പഠനം തുടങ്ങാം (Start)</button>
 
     <div class="grid" id="mainGrid"></div>
 
+    <footer>നിർമ്മാണം: അമീൻ അസ്ഹരി | മദ്രസ ഡിജിറ്റൽ ഹബ്ബ്</footer>
+
     <script>
-        // മുഴുവൻ അക്ഷരങ്ങളുടെയും ലിസ്റ്റ്
-        const fullLesson = [
-            { c: 'أ', w: 'أَرْنَبٌ', m: 'Rabbit', e: '🐇' },
-            { c: 'ب', w: 'بَيْتٌ', m: 'House', e: '🏠' },
-            { c: 'ت', w: 'تُفَّاحٌ', m: 'Apple', e: '🍎' },
-            { c: 'ث', w: 'ثَوْبٌ', m: 'Dress', e: '👕' },
-            { c: 'ج', w: 'جَمَلٌ', m: 'Camel', e: '🐪' },
-            { c: 'ح', w: 'حِصَانٌ', m: 'Horse', e: '🐎' },
-            { c: 'خ', w: 'خُبْزٌ', m: 'Bread', e: '🍞' },
-            { c: 'د', w: 'دِيكٌ', m: 'Rooster', e: '🐓' },
-            { c: 'ذ', w: 'ذُرَةٌ', m: 'Corn', e: '🌽' },
-            { c: 'ر', w: 'رُمَّانٌ', m: 'Pomegranate', e: '🍎' },
-            { c: 'ز', w: 'زَهْرَةٌ', m: 'Flower', e: '🌸' },
-            { c: 'س', w: 'سَمَكٌ', m: 'Fish', e: '🐟' },
-            { c: 'ش', w: 'شَمْسٌ', m: 'Sun', e: '☀️' },
-            { c: 'ص', w: 'صَقْرٌ', m: 'Falcon', e: '🦅' },
-            { c: 'ض', w: 'ضِفْدَعٌ', m: 'Frog', e: '🐸' },
-            { c: 'ط', w: 'طَيَّارَةٌ', m: 'Airplane', e: '✈️' },
-            { c: 'ظ', w: 'ظَبْيٌ', m: 'Deer', e: '🦌' },
-            { c: 'ع', w: 'عَيْنٌ', m: 'Eye', e: '👁️' },
-            { c: 'غ', w: 'غَزَالٌ', m: 'Gazelle', e: '🦌' },
-            { c: 'ف', w: 'فِيلٌ', m: 'Elephant', e: '🐘' },
-            { c: 'ق', w: 'قِطٌّ', m: 'Cat', e: '🐈' },
-            { c: 'ك', w: 'كَلْبٌ', m: 'Dog', e: '🐕' },
-            { c: 'ل', w: 'لَيْمُونٌ', m: 'Lemon', e: '🍋' },
-            { c: 'م', w: 'مَوْزٌ', m: 'Banana', e: '🍌' },
-            { c: 'ن', w: 'نَجْمَةٌ', m: 'Star', e: '⭐' },
-            { c: 'ه', w: 'هِلالٌ', m: 'Crescent', e: '🌙' },
-            { c: 'و', w: 'وَرْدَةٌ', m: 'Rose', e: '🌹' },
-            { c: 'ي', w: 'يَدٌ', m: 'Hand', e: '✋' }
+        const alphabet = [
+            { c: 'أ', w: 'أَرْنَبٌ', e: '🐇', h: ['أَ', 'إِ', 'أُ', 'أْ'] },
+            { c: 'ب', w: 'بَيْتٌ', e: '🏠', h: ['بَ', 'بِ', 'بُ', 'بْ'] },
+            { c: 'ت', w: 'تُفَّاحٌ', e: '🍎', h: ['تَ', 'تِ', 'تُ', 'تْ'] },
+            { c: 'ث', w: 'ثَوْبٌ', e: '👕', h: ['ثَ', 'ثِ', 'ثُ', 'ثْ'] },
+            { c: 'ج', w: 'جَمَلٌ', e: '🐪', h: ['جَ', 'جِ', 'جُ', 'جْ'] },
+            { c: 'ح', w: 'حِصَانٌ', e: '🐎', h: ['حَ', 'حِ', 'حُ', 'حْ'] },
+            { c: 'خ', w: 'خُبْزٌ', e: '🍞', h: ['خَ', 'خِ', 'خُ', 'خْ'] },
+            { c: 'د', w: 'دِيكٌ', e: '🐓', h: ['دَ', 'دِ', 'دُ', 'دْ'] },
+            { c: 'ذ', w: 'ذُرَةٌ', e: '🌽', h: ['ذَ', 'ذِ', 'ذُ', 'ذْ'] },
+            { c: 'ر', w: 'رُمَّانٌ', e: '🍎', h: ['رَ', 'رِ', 'رُ', 'رْ'] },
+            { c: 'ز', w: 'زَهْرَةٌ', e: '🌸', h: ['زَ', 'زِ', 'زُ', 'زْ'] },
+            { c: 'س', w: 'سَمَكٌ', e: '🐟', h: ['سَ', 'سِ', 'سُ', 'سْ'] },
+            { c: 'ش', w: 'شَمْسٌ', e: '☀️', h: ['شَ', 'شِ', 'شُ', 'شْ'] },
+            { c: 'ص', w: 'صَقْرٌ', e: '🦅', h: ['صَ', 'صِ', 'صُ', 'صْ'] },
+            { c: 'ض', w: 'ضِفْدَعٌ', e: '🐸', h: ['ضَ', 'ضِ', 'ضُ', 'ضْ'] },
+            { c: 'ط', w: 'طَيَّارَةٌ', e: '✈️', h: ['طَ', 'طِ', 'طُ', 'طْ'] },
+            { c: 'ظ', w: 'ظَبْيٌ', e: '🦌', h: ['ظَ', 'ظِ', 'ظُ', 'ظْ'] },
+            { c: 'ع', w: 'عَيْنٌ', e: '👁️', h: ['عَ', 'عِ', 'عُ', 'عْ'] },
+            { c: 'غ', w: 'غَزَالٌ', e: '🦌', h: ['غَ', 'غِ', 'غُ', 'غْ'] },
+            { c: 'ف', w: 'فِيلٌ', e: '🐘', h: ['فَ', 'فִ', 'فُ', 'فْ'] },
+            { c: 'ق', w: 'قِطٌّ', e: '🐈', h: ['قَ', 'قِ', 'قُ', 'قْ'] },
+            { c: 'ك', w: 'كَلْبٌ', e: '🐕', h: ['كَ', 'كِ', 'كُ', 'كْ'] },
+            { c: 'ل', w: 'لَيْمُونٌ', e: '🍋', h: ['لَ', 'لِ', 'لُ', 'لْ'] },
+            { c: 'م', w: 'مَوْزٌ', e: '🍌', h: ['مَ', 'مِ', 'مُ', 'مْ'] },
+            { c: 'ن', w: 'نَجْمَةٌ', e: '⭐', h: ['نَ', 'نِ', 'نُ', 'نْ'] },
+            { c: 'ه', w: 'هِلالٌ', e: '🌙', h: ['هَ', 'هِ', 'هُ', 'هْ'] },
+            { c: 'و', w: 'وَرْدَةٌ', e: '🌹', h: ['وَ', 'وِ', 'وُ', 'وْ'] },
+            { c: 'ي', w: 'يَدٌ', e: '✋', h: ['يَ', 'يِ', 'يُ', 'يْ'] }
         ];
 
         function initAudio() {
@@ -105,16 +97,30 @@
         }
 
         const grid = document.getElementById('mainGrid');
-        fullLesson.forEach(item => {
+        
+        alphabet.forEach(item => {
             const card = document.createElement('div');
             card.className = 'card';
+            
+            let harakatHTML = '';
+            item.h.forEach(sound => {
+                harakatHTML += `
+                    <div class="h-btn" onclick="speak('${sound}')">
+                        <span class="h-text">${sound}</span>
+                    </div>
+                `;
+            });
+
             card.innerHTML = `
-                <p class="big-letter">${item.c}</p>
-                <div class="emoji">${item.e}</div>
-                <p class="word">${item.w}</p>
-                <p class="meaning">${item.m}</p>
+                <div class="main-info" onclick="speak('${item.c}, ${item.w}')">
+                    <p class="big-letter">${item.c}</p>
+                    <div class="emoji">${item.e}</div>
+                    <p class="word">${item.w}</p>
+                </div>
+                <div class="harakat-box">
+                    ${harakatHTML}
+                </div>
             `;
-            card.onclick = () => speak(`${item.c}, ${item.w}`);
             grid.appendChild(card);
         });
 
@@ -122,7 +128,7 @@
             window.speechSynthesis.cancel();
             const msg = new SpeechSynthesisUtterance(text);
             msg.lang = 'ar-SA';
-            msg.rate = 0.7;
+            msg.rate = 0.6;
             window.speechSynthesis.speak(msg);
         }
     </script>
